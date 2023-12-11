@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="./main.js" defer></script>
+	<link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/b0f29e9bfe.js" crossorigin="anonymous"></script>
+	<title></title>
+
+	<style type="text/css">
+		
+		* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: sans-serif;
+    background-color: black;
+
+    //direction: rtl;
+}
+
+/* Book */
+.book {
+    position: relative;
+    width: 385px;
+    height: 570px;
+    transition: transform 0.5s;
+
+    //direction: ltr;
+}
+
+.paper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    perspective: 1500px;
+
+}
+
+.front,
+.back {
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transition: transform 0.5s;
+}
+
+.front {
+    z-index: 1;
+    backface-visibility: hidden;
+    border-left: 3px solid powderblue;
+}
+
+.back {
+    z-index: 0;
+}
+
+.front-content,
+.back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-content {
+    transform: rotateY(180deg)
+}
+
+/* Paper flip effect */
+.flipped .front,
+.flipped .back {
+    transform: rotateY(-180deg);
+}
+
+/* Controller Buttons */
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin: 10px;
+    transition: transform 0.5s;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover i {
+    color: #636363;
+}
+
+i {
+    font-size: 50px;
+    color: gray;
+}
+
+/* Paper stack order */
+#p1 {
+    z-index: 21;
+}
+
+#p2 {
+    z-index: 20;
+}
+
+#p3 {
+    z-index: 19;
+}
+
+#p4 {
+    z-index: 18;
+}
+
+#p5 {
+    z-index: 17;
+}
+
+#p6 {
+    z-index: 16;
+}
+
+#p7 {
+    z-index: 15;
+}
+
+#p8 {
+    z-index: 14;
+}
+
+#p9 {
+    z-index: 13;
+}
+
+#p10 {
+    z-index: 12;
+}
+
+#p11 {
+    z-index: 11;
+}
+
+#p12 {
+    z-index: 10;
+}
+
+#p13 {
+    z-index: 9;
+}
+
+#p14 {
+    z-index: 8;
+}
+
+#p15 {
+    z-index: 7;
+}
+
+#p16 {
+    z-index: 6;
+}
+#p17 {
+    z-index: 5;
+}
+
+#p18 {
+    z-index: 4;
+}
+
+#p19 {
+    z-index: 3;
+}
+
+#p20 {
+    z-index: 2;
+}
+
+#p21 {
+    z-index: 1;
+}
+
+
+
+
+
+#f1 img,
+#f2 img,
+#f3 img,
+#f4 img,
+#f5 img,
+#f6 img,
+#f7 img,
+#f8 img,
+#f9 img,
+#f10 img,
+#f11 img,
+#f12 img,
+#f13 img,
+#f14 img,
+#f15 img,
+#f16 img,
+#f17 img,
+#f18 img,
+#f19 img,
+#f20 img,
+#f21 img {
+    /* Styles for the image inside the div */
+    width: 100%; /* Ensures the image fills the container div */
+    height: 100%; /* Ensures the image fills the container div */
+    object-fit: cover; /* Keeps the aspect ratio and covers the div */
+}
+
+
+#b1 img,
+#b2 img,
+#b3 img,
+#b4 img,
+#b5 img,
+#b6 img,
+#b7 img,
+#b8 img,
+#b9 img,
+#b10 img,
+#b11 img,
+#b12 img,
+#b13 img,
+#b14 img,
+#b15 img,
+#b16 img,
+#b17 img,
+#b18 img,
+#b19 img,
+#b20 img,
+#b21 img {
+    /* Styles for the image inside the div */
+    width: 100%; /* Ensures the image fills the container div */
+    height: 100%; /* Ensures the image fills the container div */
+    object-fit: cover; /* Keeps the aspect ratio and covers the div */
+}
+
+
+	</style>
+
+</head>
+<body>
+
+	<!-- Previous Button -->
+    <button id="prev-btn">
+        <i class="fas fa-arrow-circle-left"></i>
+    </button>
+
+
+    <!-- Book -->
+    <div id="book" class="book">
+
+
+        <!-- Paper 1 -->
+        <div id="p1" class="paper">
+            <div class="front">
+                <div id="f1" class="front-content">
+                    <!-- <h1>Front 1</h1> -->
+                </div>
+            </div>
+            <div class="back">
+                <div id="b1" class="back-content">
+                    <!-- <h1>Back 1</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_041.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 2 -->
+        <div id="p2" class="paper">
+            <div class="front">
+                <div id="f2" class="front-content">
+                    <!-- <h1>Front 2</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_040.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b2" class="back-content">
+                    <!-- <h1>Back 2</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_039.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 3 -->
+        <div id="p3" class="paper">
+            <div class="front">
+                <div id="f3" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_038.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b3" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_037.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 4 -->
+        <div id="p4" class="paper">
+            <div class="front">
+                <div id="f4" class="front-content">
+                    <!-- <h1>Front 4</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_036.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b4" class="back-content">
+                    <!-- <h1>Back 4</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_035.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 5 -->
+        <div id="p5" class="paper">
+            <div class="front">
+                <div id="f5" class="front-content">
+                    <!-- <h1>Front 5</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_034.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b5" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_033.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 6 -->
+        <div id="p6" class="paper">
+            <div class="front">
+                <div id="f6" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_032.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b6" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_031.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 7 -->
+        <div id="p7" class="paper">
+            <div class="front">
+                <div id="f7" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_030.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b7" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_029.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 8 -->
+        <div id="p8" class="paper">
+            <div class="front">
+                <div id="f8" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_028.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b8" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_027.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 9 -->
+        <div id="p9" class="paper">
+            <div class="front">
+                <div id="f9" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_026.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b9" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_025.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 10 -->
+        <div id="p10" class="paper">
+            <div class="front">
+                <div id="f10" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_024.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b10" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_023.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 11 -->
+        <div id="p11" class="paper">
+            <div class="front">
+                <div id="f11" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_022.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b11" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_021.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 12 -->
+        <div id="p12" class="paper">
+            <div class="front">
+                <div id="f12" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_020.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b12" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_019.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 13 -->
+        <div id="p13" class="paper">
+            <div class="front">
+                <div id="f13" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_018.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b13" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_017.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 3 -->
+        <div id="p14" class="paper">
+            <div class="front">
+                <div id="f14" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_016.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b14" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_015.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 3 -->
+        <div id="p15" class="paper">
+            <div class="front">
+                <div id="f15" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_014.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b15" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_013.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 3 -->
+        <div id="p16" class="paper">
+            <div class="front">
+                <div id="f16" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_012.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b16" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_011.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 3 -->
+        <div id="p17" class="paper">
+            <div class="front">
+                <div id="f17" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_010.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b17" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_009.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 3 -->
+        <div id="p18" class="paper">
+            <div class="front">
+                <div id="f18" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_008.png">
+                </div>
+            </div>
+            <div class="back">
+                <div id="b18" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_007.png">
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Paper 3 -->
+        <div id="p19" class="paper">
+            <div class="front">
+                <div id="f19" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                </div>
+            </div>
+            <div class="back">
+                <div id="b19" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Pictures/Ali%20Muhammad%20Ali%20-%20YouTube_files/Nouveau%20dossier/Nouveau%20dossier/(96)%20Pinterest_files/Bright%20Spots%20in%20the%20Sky_005.png">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Paper 3 -->
+        <div id="p20" class="paper">
+            <div class="front">
+                <div id="f21" class="front-content">
+                    <!-- <h1>Front 3</h1> -->
+                </div>
+            </div>
+            <div class="back">
+                <div id="b21" class="back-content">
+                    <!-- <h1>Back 3</h1> -->
+                    <img src="file:///C:/Users/BerrouTIC/Downloads/Untitled%20design.png">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Next Button -->
+    <button id="next-btn">
+        <i class="fas fa-arrow-circle-right"></i>
+    </button>
+
+
+    <script type="text/javascript">
+    	
+    	// References to DOM Elements
+		const prevBtn = document.querySelector("#prev-btn");
+		const nextBtn = document.querySelector("#next-btn");
+		const book = document.querySelector("#book");
+
+		const paper1 = document.querySelector("#p1");
+		const paper2 = document.querySelector("#p2");
+		const paper3 = document.querySelector("#p3");
+		const paper4 = document.querySelector("#p4");
+		const paper5 = document.querySelector("#p5");
+		const paper6 = document.querySelector("#p6");
+		const paper7 = document.querySelector("#p7");
+		const paper8 = document.querySelector("#p8");
+		const paper9 = document.querySelector("#p9");
+		const paper10 = document.querySelector("#p10");
+		const paper11 = document.querySelector("#p11");
+		const paper12 = document.querySelector("#p12");
+		const paper13 = document.querySelector("#p13");
+		const paper14 = document.querySelector("#p14");
+		const paper15 = document.querySelector("#p15");
+		const paper16 = document.querySelector("#p16");
+		const paper17 = document.querySelector("#p17");
+		const paper18 = document.querySelector("#p18");
+		const paper19 = document.querySelector("#p19");
+		const paper20 = document.querySelector("#p20");
+		const paper21 = document.querySelector("#p21");
+
+
+		// Event Listener
+		prevBtn.addEventListener("click", goPrevPage);
+		nextBtn.addEventListener("click", goNextPage);
+
+		// Business Logic
+		let currentLocation = 1;
+		let numOfPapers = 22;
+		let maxLocation = numOfPapers + 1;
+
+
+		function openBook() {
+	    book.style.transform = "translateX(50%)";
+	    prevBtn.style.transform = "translateX(-180px)";
+	    nextBtn.style.transform = "translateX(180px)";
+		}
+
+
+		function closeBook(isAtBeginning) {
+	    if(isAtBeginning) {
+	        book.style.transform = "translateX(0%)";
+	    } else {
+	        book.style.transform = "translateX(100%)";
+	    }
+	    
+	    prevBtn.style.transform = "translateX(0px)";
+	    nextBtn.style.transform = "translateX(0px)";
+		}
+
+
+		function goNextPage() {
+	    if(currentLocation < maxLocation) {
+	        switch(currentLocation) {
+	            case 1:
+	                openBook();
+	                paper1.classList.add("flipped");
+	                paper1.style.zIndex = 1;
+	                break;
+	            case 2:
+	                paper2.classList.add("flipped");
+	                paper2.style.zIndex = 2;
+	                break;
+	            case 3:
+	                paper3.classList.add("flipped");
+	                paper3.style.zIndex = 3;
+	                //closeBook(false);
+	                break;
+	            case 4:
+	                paper4.classList.add("flipped");
+	                paper4.style.zIndex = 4;
+	                //closeBook(false);
+	                break;
+	            case 5:
+	                paper5.classList.add("flipped");
+	                paper5.style.zIndex = 5;
+	                //closeBook(false);
+	                break;
+	            case 6:
+	                paper6.classList.add("flipped");
+	                paper6.style.zIndex = 6;
+	                //closeBook(false);
+	                break;
+	            case 7:
+	                paper7.classList.add("flipped");
+	                paper7.style.zIndex = 7;
+	                //closeBook(false);
+	                break;
+	            case 8:
+	                paper8.classList.add("flipped");
+	                paper8.style.zIndex = 8;
+	                //closeBook(false);
+	                break;
+	            case 9:
+	                paper9.classList.add("flipped");
+	                paper9.style.zIndex = 9;
+	                //closeBook(false);
+	                break;
+	            case 10:
+	                paper10.classList.add("flipped");
+	                paper10.style.zIndex = 10;
+	                //closeBook(false);
+	                break;
+	            case 11:
+	                paper11.classList.add("flipped");
+	                paper11.style.zIndex = 11;
+	                //closeBook(false);
+	                break;
+	            case 12:
+	                paper12.classList.add("flipped");
+	                paper12.style.zIndex = 12;
+	                //closeBook(false);
+	                break;
+	            case 13:
+	                paper13.classList.add("flipped");
+	                paper13.style.zIndex = 13;
+	                //closeBook(false);
+	                break;
+	            case 14:
+	                paper14.classList.add("flipped");
+	                paper14.style.zIndex = 14;
+	                //closeBook(false);
+	                break;
+	            case 15:
+	                paper15.classList.add("flipped");
+	                paper15.style.zIndex = 15;
+	                //closeBook(false);
+	                break;
+	            case 16:
+	                paper16.classList.add("flipped");
+	                paper16.style.zIndex = 16;
+	                //closeBook(false);
+	                break;
+	            case 17:
+	                paper17.classList.add("flipped");
+	                paper17.style.zIndex = 17;
+	                //closeBook(false);
+	                break;
+	            case 18:
+	                paper18.classList.add("flipped");
+	                paper18.style.zIndex = 18;
+	                //closeBook(false);
+	                break;
+	            case 19:
+	                paper19.classList.add("flipped");
+	                paper19.style.zIndex = 19;
+	                //closeBook(false);
+	                break;
+	            case 20:
+	                paper20.classList.add("flipped");
+	                paper20.style.zIndex = 20;
+	                closeBook(false);
+	                break;
+	            /*case 21:
+	                paper21.classList.add("flipped");
+	                paper21.style.zIndex = 21;
+	                closeBook(false);
+	                break;*/
+	            
+	            default:
+	                throw new Error("unkown state");
+	        }
+	        currentLocation++;
+	    }
+	}
+
+
+	function goPrevPage() {
+	    if(currentLocation > 1) {
+	        switch(currentLocation) {
+	            case 2:
+	                //closeBook(true);
+	                openBook();
+	                paper1.classList.remove("flipped");
+	                paper1.style.zIndex = 21;
+	                break;
+	            case 3:
+	            	//closeBook(true);
+	            	openBook();
+	                paper2.classList.remove("flipped");
+	                paper2.style.zIndex = 20;
+	                break;
+	            case 4:
+	            	//closeBook(true);
+	                openBook();
+	                paper3.classList.remove("flipped");
+	                paper3.style.zIndex = 19;
+	                break;
+	            case 5:
+	            	//closeBook(true);
+	                openBook();
+	                paper4.classList.remove("flipped");
+	                paper4.style.zIndex = 18;
+	                break;
+	            case 6:
+	            	//closeBook(true);
+	                openBook();
+	                paper5.classList.remove("flipped");
+	                paper5.style.zIndex = 17;
+	                break;
+	            case 7:
+	                openBook();
+	                paper6.classList.remove("flipped");
+	                paper6.style.zIndex = 16;
+	                break;
+	            case 8:
+	                openBook();
+	                paper7.classList.remove("flipped");
+	                paper7.style.zIndex = 15;
+	                break;
+	            case 9:
+	                //closeBook(true);
+	                paper8.classList.remove("flipped");
+	                paper8.style.zIndex = 14;
+	                break;
+	            case 10:
+	            	//closeBook(true);
+	                paper9.classList.remove("flipped");
+	                paper9.style.zIndex = 13;
+	                break;
+	            case 11:
+	            	//closeBook(true);
+	                openBook();
+	                paper10.classList.remove("flipped");
+	                paper10.style.zIndex = 12;
+	                break;
+	            case 12:
+	            	//closeBook(true);
+	                openBook();
+	                paper11.classList.remove("flipped");
+	                paper11.style.zIndex = 11;
+	                break;
+	            case 13:
+	            	//closeBook(true);
+	                openBook();
+	                paper12.classList.remove("flipped");
+	                paper12.style.zIndex = 10;
+	                break;
+	            case 14:
+	                openBook();
+	                paper13.classList.remove("flipped");
+	                paper13.style.zIndex = 9;
+	                break;
+	            case 15:
+	                openBook();
+	                paper14.classList.remove("flipped");
+	                paper14.style.zIndex = 8;
+	                break;
+	            case 16:
+	                //closeBook(true);
+	                paper15.classList.remove("flipped");
+	                paper15.style.zIndex = 7;
+	                break;
+	            case 17:
+	            	//closeBook(true);
+	                paper16.classList.remove("flipped");
+	                paper16.style.zIndex = 6;
+	                break;
+	            case 18:
+	            	//closeBook(true);
+	                openBook();
+	                paper17.classList.remove("flipped");
+	                paper17.style.zIndex = 5;
+	                break;
+	            case 19:
+	            	//closeBook(true);
+	                openBook();
+	                paper18.classList.remove("flipped");
+	                paper18.style.zIndex = 4;
+	                break;
+	            case 20:
+	            	//closeBook(true);
+	                openBook();
+	                paper19.classList.remove("flipped");
+	                paper19.style.zIndex = 3;
+	                break;
+	            case 21:
+	            	//closeBook(true);
+	                openBook();
+	                paper20.classList.remove("flipped");
+	                paper20.style.zIndex = 2;
+	                break;
+	            case 22:
+	            	closeBook(true);
+	                //openBook();
+	                paper21.classList.remove("flipped");
+	                paper21.style.zIndex = 1;
+	                break;
+	           
+	            default:
+	                throw new Error("unkown state");
+	        }
+
+	        currentLocation--;
+	    }
+	}
+
+
+
+
+	 let counter = 0;
+    const maxExecutions = 20;
+    const intervalId = setInterval(function() {
+      goNextPage();
+      counter++;
+      if (counter === maxExecutions) {
+        clearInterval(intervalId); // Stop execution after 20 times
+      }
+    }, 1);
+
+    </script>
+
+</body>
+</html>
